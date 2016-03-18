@@ -1,20 +1,29 @@
-myApp.controller("MyCtrl", ['$scope', '$http',
-  function($scope, $http) {
-    $http.get("phones/phones.json").success(function (data) {
-      $scope.phones = data;
-    });
-  }]);
+myApp.controller("MyCtrl", ['$scope', '$http', 'MyService',
+    function ($scope, $http, MyService) {
+        MyService.getPhones("phones").then(function (phones) {
+            $scope.phones = phones.data;
+        });
+    }]);
 
-myApp.controller("PhoneDetailCtrl", ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http) {
+myApp.controller("PhoneDetailCtrl", ['$scope', '$routeParams', '$http', 'MyService',
+    function ($scope, $routeParams, $http, MyService) {
 
-    $http.get("phones/" + $routeParams.phoneId + ".json").success(function (data) {
-      $scope.phone = data;
-      $scope.myImage = data.images[0];
-    });
+        MyService.getPhones($routeParams.phoneId).then(function (phones) {
+            $scope.phone = phones.data;
+            $scope.myImage = phones.data.images[0];
+        });
 
-    $scope.setImage = function (imageUrl) {
-      $scope.myImage = imageUrl;
-    };
+        $scope.setImage = function (imageUrl) {
+            $scope.myImage = imageUrl;
+        };
 
-  }]);
+    }]);
+
+myApp.service('MyService', function ($http) {
+    this.getPhones = function (id) {
+        return $http.get("phones/"+ id +".json").then(function (data) {
+                return data;
+            }
+        )
+    }
+});

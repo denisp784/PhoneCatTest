@@ -1,0 +1,18 @@
+<style>
+    .minImage {
+        width: 100px;
+        height: 100px;
+        padding-right: 10px;
+    }
+</style>
+<b>Name:</b> {{phone.name}}
+<div>
+    <img ng-src="{{myImage}}">
+</div>
+<table>
+    <tr>
+        <td ng-repeat="image in phone.images">
+            <img class="minImage" ng-src="{{image}}" ng-click="setImage(image)">
+        </td>
+    </tr>
+</table>

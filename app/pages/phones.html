@@ -1,0 +1,13 @@
+<style>
+    .phone-class{
+        border: solid;
+        border-color: #0d3349;
+    }
+</style>
+<p>Фильтр:</p>
+<input style="margin-bottom: 50px" type="text" ng-model="my_filt"/>
+<div class="phone-class" ng-repeat="phone in phones | filter:my_filt">
+    <a href="#/phones/{{phone.id}}"><img src="{{phone.imageUrl}}"></a>
+    </br>
+    <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
+</div>
